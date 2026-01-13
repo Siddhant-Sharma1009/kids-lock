@@ -3,7 +3,7 @@
  * Backend will plug in here (STEP 4+)
  */
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "https://kids-lock-backend.onrender.com";
 
 export async function apiRequest(endpoint, options = {}) {
   const res = await fetch(`${API_BASE}${endpoint}`, {
