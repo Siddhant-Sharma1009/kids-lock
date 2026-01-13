@@ -1,0 +1,23 @@
+.dancing-dots {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, #120024, #000);
+}
+
+.dot {
+  position: absolute;
+  background: cyan;
+  border-radius: 50%;
+  animation: dance 2s infinite alternate;
+}
+
+@keyframes dance {
+  from {
+    transform: scale(0.5);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(1.6);
+    opacity: 1;
+  }
+}

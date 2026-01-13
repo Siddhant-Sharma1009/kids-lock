@@ -1,0 +1,50 @@
+.kaleido-space {
+  position: absolute;
+  inset: 0;
+  background: #050510;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Grid container */
+.kaleido-grid {
+  width: 80vmin;
+  height: 80vmin;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  transform: rotate(45deg);
+  transition: filter 0.5s linear;
+}
+
+/* Individual tiles */
+.tile {
+  background: radial-gradient(
+    circle at top left,
+    #ffffff,
+    #6366f1,
+    #000
+  );
+  opacity: 0.85;
+  animation: tilePulse 6s ease-in-out infinite;
+}
+
+/* Offset animation phases */
+.tile:nth-child(odd) {
+  animation-delay: -3s;
+}
+
+/* Gentle pulse */
+@keyframes tilePulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

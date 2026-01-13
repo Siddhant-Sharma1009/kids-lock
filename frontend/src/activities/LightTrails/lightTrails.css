@@ -1,0 +1,22 @@
+.light-trails {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, #050914, #000);
+  overflow: hidden;
+}
+
+.trail {
+  position: absolute;
+  left: -30%;
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, cyan, transparent);
+  animation: slideTrail 3s linear forwards;
+}
+
+@keyframes slideTrail {
+  to {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,21 @@
+.bubble-container {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at bottom, #0a2540, #000);
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -80px;
+  border-radius: 50%;
+  background: rgba(173, 216, 230, 0.7);
+  box-shadow: inset -5px -5px 15px rgba(255, 255, 255, 0.6);
+  animation: rise 7s linear forwards;
+}
+
+@keyframes rise {
+  to {
+    transform: translateY(-120vh);
+  }
+}

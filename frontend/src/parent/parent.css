@@ -1,0 +1,160 @@
+/* ===============================
+   Parent Dashboard
+================================ */
+
+:root {
+  --primary: #8adfff;
+  --secondary: #9fa2ff;
+  --danger: #ff6b6b;
+  --glass: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.14);
+}
+
+/* Dashboard container */
+.parent-dashboard {
+  max-width: 760px;
+  margin: 60px auto;
+  padding: 44px 48px;
+  text-align: center;
+
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+
+  color: #fff;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+
+  animation: fadeUp 0.8s ease forwards;
+}
+
+/* Title */
+.parent-dashboard h2 {
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+
+  background: linear-gradient(90deg, #ffffff, var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Exit code display */
+.parent-dashboard p {
+  font-size: 1.1rem;
+  margin: 18px 0;
+  opacity: 0.9;
+}
+
+.parent-dashboard strong {
+  color: var(--primary);
+}
+
+.parent-dashboard p br + span,
+.parent-dashboard p {
+  letter-spacing: 0.4px;
+}
+
+/* Input */
+.parent-dashboard input {
+  width: 100%;
+  max-width: 360px;
+  margin: 20px auto 12px;
+  padding: 14px 16px;
+  display: block;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.parent-dashboard input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.parent-dashboard input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(138, 223, 255, 0.25);
+}
+
+/* Buttons */
+.parent-dashboard button {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  margin: 14px auto;
+  padding: 14px 22px;
+
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #000;
+
+  transition: all 0.25s ease;
+}
+
+.parent-dashboard button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Danger button */
+.parent-dashboard .danger {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+}
+
+.parent-dashboard .danger:hover {
+  background: rgba(255, 107, 107, 0.15);
+  box-shadow: none;
+}
+
+/* Divider */
+.parent-dashboard hr {
+  margin: 32px auto;
+  max-width: 400px;
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Success / message */
+.parent-dashboard p:last-of-type {
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+
+/* ===============================
+   Animations
+================================ */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===============================
+   Mobile
+================================ */
+
+@media (max-width: 600px) {
+  .parent-dashboard {
+    padding: 32px 24px;
+    margin: 30px 16px;
+  }
+}

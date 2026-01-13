@@ -1,0 +1,16 @@
+.faces-area {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, #ffefba, #fff);
+}
+
+.face {
+  position: absolute;
+  font-size: 48px;
+  animation: bounce 1.5s infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-20px); }
+}

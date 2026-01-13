@@ -1,0 +1,104 @@
+/* ===============================
+   STAGE
+================================ */
+.illusion-container {
+  width: 100vw;
+  height: 100vh;
+  background: #050505;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===============================
+   GRID BASE
+================================ */
+.grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ===============================
+   HORIZONTAL BANDS
+================================ */
+.horizontal span {
+  position: absolute;
+  width: 120%;
+  height: 14px;
+  left: -10%;
+  top: calc(var(--i) * 3.3%);
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #ff1744 0 16px,
+      #ffea00 16px 32px,
+      #00e5ff 32px 48px,
+      #7c4dff 48px 64px
+    );
+
+  animation: driftX 3.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.07s);
+}
+
+/* ===============================
+   VERTICAL BANDS
+================================ */
+.vertical span {
+  position: absolute;
+  height: 120%;
+  width: 14px;
+  top: -10%;
+  left: calc(var(--i) * 3.3%);
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      #00e676 0 16px,
+      #ff9100 16px 32px,
+      #2979ff 32px 48px,
+      #d500f9 48px 64px
+    );
+
+  animation: driftY 4.2s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.09s);
+}
+
+/* ===============================
+   ILLUSION MOTION
+================================ */
+@keyframes driftX {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(26px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes driftY {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(26px); }
+  100% { transform: translateY(0); }
+}
+
+/* ===============================
+   CONTRAST INTERFERENCE
+================================ */
+.horizontal span:nth-child(even),
+.vertical span:nth-child(even) {
+  filter: brightness(1.25);
+}
+
+.horizontal span:nth-child(odd),
+.vertical span:nth-child(odd) {
+  filter: brightness(0.85);
+}
+
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 600px) {
+  .horizontal span,
+  .vertical span {
+    width: 10px;
+    height: 10px;
+  }
+}

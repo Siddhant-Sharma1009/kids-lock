@@ -1,0 +1,59 @@
+/* Fullscreen safe wrapper */
+.kaleido-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+  overflow: hidden;
+}
+
+/* Main kaleidoscope container */
+.kaleido {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  animation: spin 18s linear infinite;
+}
+
+/* Individual triangular slices */
+.slice {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  transform-origin: 0% 0%;
+  transform:
+    rotate(calc(var(--i) * 15deg))
+    skewY(-30deg);
+
+  background: linear-gradient(
+    135deg,
+    hsl(calc(var(--i) * 15), 80%, 60%),
+    hsl(calc(var(--i) * 15 + 60), 90%, 50%)
+  );
+
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  opacity: 0.9;
+}
+
+/* Rotation animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .kaleido {
+    width: 220px;
+    height: 220px;
+  }
+}

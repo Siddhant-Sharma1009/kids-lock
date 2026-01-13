@@ -1,0 +1,21 @@
+.rain-area {
+  position: absolute;
+  inset: 0;
+  background: #050914;
+  overflow: hidden;
+}
+
+.rain-drop {
+  position: absolute;
+  top: -40px;
+  width: 6px;
+  height: 30px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(120vh);
+    opacity: 0;
+  }
+}

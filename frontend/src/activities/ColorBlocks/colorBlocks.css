@@ -1,0 +1,17 @@
+.blocks-area {
+  position: absolute;
+  inset: 0;
+  background: #111;
+}
+
+.block {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}

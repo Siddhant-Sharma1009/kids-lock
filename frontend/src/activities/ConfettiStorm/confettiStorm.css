@@ -1,0 +1,17 @@
+.confetti-area {
+  position: absolute;
+  inset: 0;
+  background: #000;
+}
+
+.confetti {
+  position: absolute;
+  top: -20px;
+  width: 8px;
+  height: 16px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(120vh) rotate(360deg); }
+}

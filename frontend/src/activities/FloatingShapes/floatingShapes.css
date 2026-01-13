@@ -1,0 +1,21 @@
+.floating-area {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #141e30, #000);
+}
+
+.float-shape {
+  position: absolute;
+  bottom: -60px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  animation: floatUp 6s linear forwards;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}

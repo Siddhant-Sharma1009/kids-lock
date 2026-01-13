@@ -1,0 +1,23 @@
+.pattern-flow {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  background: #060b23;
+}
+
+.pattern-tile {
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #ff0080, #00ffff);
+  opacity: 0.15;
+  animation: rotateTile 6s infinite alternate;
+}
+
+@keyframes rotateTile {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}

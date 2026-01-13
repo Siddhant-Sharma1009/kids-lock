@@ -1,0 +1,129 @@
+/* ===== SCENE ===== */
+.space-3d {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, #020218, #000);
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+/* ===== SUN ===== */
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #fff7ae,
+    #ff9800 60%,
+    #b45309
+  );
+  box-shadow:
+    0 0 80px rgba(255, 180, 80, 0.9),
+    0 0 140px rgba(255, 140, 0, 0.6);
+}
+
+/* ===== ORBITS ===== */
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+}
+
+.orbit-1 {
+  width: 280px;
+  height: 280px;
+  margin-left: -140px;
+  margin-top: -140px;
+}
+
+.orbit-2 {
+  width: 380px;
+  height: 380px;
+  margin-left: -190px;
+  margin-top: -190px;
+}
+
+.orbit-3 {
+  width: 520px;
+  height: 520px;
+  margin-left: -260px;
+  margin-top: -260px;
+}
+
+/* ===== PLANETS (3D LOOK) ===== */
+.planet {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  box-shadow:
+    inset -6px -10px 14px rgba(0, 0, 0, 0.7),
+    inset 6px 6px 10px rgba(255, 255, 255, 0.35),
+    0 0 18px rgba(255, 255, 255, 0.25);
+}
+
+/* Planet textures */
+.planet-1 {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #e0f2fe,
+    #3b82f6 65%,
+    #020617
+  );
+}
+
+.planet-2 {
+  width: 22px;
+  height: 22px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #dcfce7,
+    #10b981 60%,
+    #022c22
+  );
+}
+
+.planet-3 {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #fee2e2,
+    #ef4444 60%,
+    #450a0a
+  );
+}
+
+/* ===== ASTEROID BELT ===== */
+.asteroid-belt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 480px;
+  height: 480px;
+  margin-left: -240px;
+  margin-top: -240px;
+  transform-style: preserve-3d;
+}
+
+.asteroid {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  background: #ccc;
+  border-radius: 50%;
+  opacity: 0.85;
+}

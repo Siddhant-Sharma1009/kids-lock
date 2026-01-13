@@ -1,0 +1,18 @@
+.pixel-waves {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  background: #000;
+}
+
+.pixel {
+  aspect-ratio: 1;
+  background: cyan;
+  animation: wave 2s infinite alternate;
+}
+
+@keyframes wave {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}

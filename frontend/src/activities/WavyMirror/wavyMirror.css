@@ -1,0 +1,16 @@
+.star-tunnel {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, #02020f, #000);
+  overflow: hidden;
+}
+
+/* Single star */
+.star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: white;
+  border-radius: 50%;
+  will-change: transform;
+}

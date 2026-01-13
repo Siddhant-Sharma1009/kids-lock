@@ -1,0 +1,72 @@
+/* ===============================
+   CONTAINER
+================================ */
+.xylophone {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #1e3c72, #2a5298);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+/* ===============================
+   BARS
+================================ */
+.bar {
+  width: 70px;
+  height: 260px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(180deg, #fff, #ddd);
+  box-shadow:
+    inset 0 -6px 0 rgba(0,0,0,0.2),
+    0 8px 16px rgba(0,0,0,0.3);
+
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
+}
+
+/* ===============================
+   COLOR VARIATION
+================================ */
+.bar-0 { background: linear-gradient(#ff8a80, #ff5252); }
+.bar-1 { background: linear-gradient(#ffd180, #ffab40); }
+.bar-2 { background: linear-gradient(#ccff90, #76ff03); }
+.bar-3 { background: linear-gradient(#80d8ff, #40c4ff); }
+
+/* ===============================
+   PRESS EFFECT
+================================ */
+.bar:active {
+  transform: translateY(6px);
+  box-shadow:
+    inset 0 -2px 0 rgba(0,0,0,0.2),
+    0 3px 8px rgba(0,0,0,0.25);
+}
+
+/* ===============================
+   KEYBOARD FOCUS (CHILD SAFE)
+================================ */
+.bar:focus-visible {
+  outline: 3px solid rgba(255,255,255,0.8);
+}
+
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 600px) {
+  .xylophone {
+    flex-direction: column;
+  }
+
+  .bar {
+    width: 80%;
+    height: 60px;
+  }
+}
