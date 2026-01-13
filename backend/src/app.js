@@ -9,10 +9,13 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://kids-lock.vercel.app/",
-    credentials: true
+    origin: "https://kids-lock.vercel.app",
+    credentials: true,
   })
 );
+
+// 🔥 REQUIRED FOR PREFLIGHT
+app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser());
