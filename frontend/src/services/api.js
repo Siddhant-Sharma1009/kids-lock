@@ -3,7 +3,7 @@
  * Production-ready for Render + Vercel
  */
 
-const API_BASE = "https://kids-lock.onrender.com";
+const API_BASE = "https://kids-lock-1.onrender.com";
 
 export async function apiRequest(endpoint, options = {}) {
   const res = await fetch(`${API_BASE}${endpoint}`, {
