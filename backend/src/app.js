@@ -10,7 +10,8 @@ const app = express();
 const allowedOrigins = [
   "https://kids-lock.vercel.app",
   "https://kids-lock-kidsafes-projects.vercel.app",
-  "https://kids-lock-mkra.vercel.app",
+  "https://kids-lock-mkra.vercel.app"
+  "http://localhost:5173/"
 ];
 
 app.use(
