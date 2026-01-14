@@ -13,7 +13,7 @@ export default function AdminSignup() {
 
   const submit = async () => {
     try {
-      await apiRequest("/auth/register", {
+      await apiRequest("/api/auth/register", {
         method: "POST",
         body: JSON.stringify({ username, password }),
       });
