@@ -1,22 +1,14 @@
-/**
- * Central API handler
- * Backend will plug in here (STEP 4+)
- */
+import { apiRequest } from "./api";
 
-const API_BASE = "https://kids-lock.onrender.com";
-
-export async function apiRequest(endpoint, options = {}) {
-  const res = await fetch(`${API_BASE}${endpoint}`, {
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    ...options,
+export async function login(username, password) {
+  return apiRequest("/api/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
   });
+}
 
-  if (!res.ok) {
-    throw new Error("API error");
-  }
-
-  return res.json();
+export async function logout() {
+  return apiRequest("/api/auth/logout", {
+    method: "POST",
+  });
 }
