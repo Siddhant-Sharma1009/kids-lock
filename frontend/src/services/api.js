@@ -1,14 +1,24 @@
-import { apiRequest } from "./api";
+/**
+ * Central API handler
+ * Production-ready for Render + Vercel
+ */
 
-export async function login(username, password) {
-  return apiRequest("/api/auth/login", {
-    method: "POST",
-    body: JSON.stringify({ username, password }),
-  });
-}
+const API_BASE = "https://kids-lock.onrender.com";
 
-export async function logout() {
-  return apiRequest("/api/auth/logout", {
-    method: "POST",
+export async function apiRequest(endpoint, options = {}) {
+  const res = await fetch(`${API_BASE}${endpoint}`, {
+    credentials: "include", // 🔥 REQUIRED for cookies
+    headers: {
+      "Content-Type": "application/json",
+    },
+    ...options,
   });
+
+  // Better error visibility
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "API error");
+  }
+
+  return res.json();
 }
