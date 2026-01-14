@@ -7,25 +7,24 @@ import userRoutes from "./routes/user.routes.js";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://kids-lock.vercel.app"
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-  })
-);
+/* 🔥 CREATE ONE CORS CONFIG */
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "https://kids-lock.vercel.app"
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
 
-// Handle preflight requests
-app.options("*", cors());
+/* 🔥 USE SAME CONFIG EVERYWHERE */
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
 
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 
