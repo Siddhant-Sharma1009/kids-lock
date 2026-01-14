@@ -7,29 +7,17 @@ import userRoutes from "./routes/user.routes.js";
 
 const app = express();
 
-const allowedOrigins = [
-  "https://kids-lock.vercel.app",
-  "https://kids-lock-kidsafes-projects.vercel.app",
-  "https://kids-lock-mkra.vercel.app"
-  "http://localhost:5173/"
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (Postman, mobile apps)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error("CORS not allowed"), false);
-      }
-    },
+    origin: [
+      "http://localhost:5173",
+      "https://kids-lock.vercel.app"
+    ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
-
 
 // Handle preflight requests
 app.options("*", cors());
