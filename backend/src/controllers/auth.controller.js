@@ -6,69 +6,90 @@ import { signToken } from "../utils/jwt.js";
  * LOGIN
  */
 export async function login(req, res) {
-  const { username, password } = req.body;
+  try {
+    const { username, password } = req.body;
 
-  const user = await User.findOne({ username });
-  if (!user) {
-    return res.status(400).json({ message: "Invalid credentials" });
-  }
+    if (!username || !password) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
 
-  const valid = await verifyPassword(password, user.passwordHash);
-  if (!valid) {
-    return res.status(400).json({ message: "Invalid credentials" });
-  }
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
-  const token = signToken({
-    id: user._id,
-    role: user.role,
-  });
+    const valid = await verifyPassword(password, user.passwordHash);
+    if (!valid) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    sameSite: "strict",
-  });
-
-  res.json({
-    user: {
-      username: user.username,
+    const token = signToken({
+      id: user._id,
       role: user.role,
-      exitSequence: user.exitSequence,
-    },
-  });
+    });
+
+    // 🔥 CORRECT COOKIE CONFIG FOR RENDER + VERCEL
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,      // REQUIRED (HTTPS)
+      sameSite: "none",  // REQUIRED (cross-site)
+    });
+
+    res.json({
+      user: {
+        username: user.username,
+        role: user.role,
+        exitSequence: user.exitSequence,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Login failed" });
+  }
 }
 
 /**
  * LOGOUT
  */
 export function logout(_, res) {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+
   res.json({ message: "Logged out" });
 }
 
 /**
- * REGISTER NEW PARENT (ADMIN ONLY)
+ * REGISTER
  */
 export async function register(req, res) {
-  const { username, password } = req.body;
+  try {
+    const { username, password } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({ message: "Missing fields" });
+    if (!username || !password) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
+
+    const exists = await User.findOne({ username });
+    if (exists) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    const user = await User.create({
+      username,
+      passwordHash: await hashPassword(password),
+      role: "PARENT",
+      exitSequence: ["e", "x", "i", "t"],
+    });
+
+    res.status(201).json({
+      message: "Parent created successfully",
+      user: { username: user.username },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Registration failed" });
   }
-
-  const exists = await User.findOne({ username });
-  if (exists) {
-    return res.status(400).json({ message: "User already exists" });
-  }
-
-  const user = await User.create({
-    username,
-    passwordHash: await hashPassword(password),
-    role: "PARENT",
-    exitSequence: ["e", "x", "i", "t"],
-  });
-
-  res.json({
-    message: "Parent created successfully",
-    user: { username: user.username },
-  });
 }
