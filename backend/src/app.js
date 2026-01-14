@@ -9,20 +9,22 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://kids-lock.vercel.app",
+    origin: "https://kids-lock.vercel.app", // EXACT frontend URL
     credentials: true,
   })
 );
 
-// 🔥 REQUIRED FOR PREFLIGHT
+// Handle preflight requests
 app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser());
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 
+// Health check
 app.get("/api/health", (_, res) => {
   res.json({ status: "OK" });
 });
