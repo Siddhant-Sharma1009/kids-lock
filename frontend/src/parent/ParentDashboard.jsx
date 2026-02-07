@@ -19,7 +19,7 @@ export default function ParentDashboard() {
       return;
     }
 
-    await apiRequest("api/user/exit-sequence", {
+    await apiRequest("/api/user/exit-sequence", {
       method: "PUT",
       body: JSON.stringify({ exitSequence: seq }),
     });
