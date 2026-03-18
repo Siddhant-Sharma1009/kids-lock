@@ -1,14 +1,16 @@
-import { verifyToken } from "../utils/jwt.js";
+import jwt from "jsonwebtoken";
 
-export default function authMiddleware(req, res, next) {
-  const token = req.cookies.token;
+export default function auth(req, res, next) {
+  const header = req.headers.authorization;
 
-  if (!token) {
-    return res.status(401).json({ message: "Not authenticated" });
+  if (!header || !header.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
+  const token = header.split(" ")[1];
+
   try {
-    const decoded = verifyToken(token);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch {
