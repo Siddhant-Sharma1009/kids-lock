@@ -15,8 +15,28 @@ const envOrigins = (process.env.CORS_ORIGIN || "")
 
 const allowedOrigins = Array.from(new Set([...fallbackOrigins, ...envOrigins]));
 
+function isAllowedOrigin(origin) {
+  if (!origin) return true;
+
+  if (allowedOrigins.includes(origin)) return true;
+
+  if (/^https:\/\/.*\.vercel\.app$/i.test(origin)) return true;
+
+  if (/^http:\/\/localhost:\d+$/i.test(origin)) return true;
+  if (/^http:\/\/127\.0\.0\.1:\d+$/i.test(origin)) return true;
+
+  return false;
+}
+
 const corsOptions = {
-  origin: allowedOrigins,
+  origin(origin, callback) {
+    if (isAllowedOrigin(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error("CORS blocked: origin not allowed"));
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],

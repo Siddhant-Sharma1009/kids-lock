@@ -35,8 +35,8 @@ export default function AdminLogin() {
       setAdminUser(res.user.username);
       setExitSequence(res.user.exitSequence);
       setAppStage("DASHBOARD");
-    } catch {
-      setError("Login failed. Please check your credentials.");
+    } catch (error) {
+      setError(error.message || "Login failed. Please check your credentials.");
     } finally {
       setIsSubmitting(false);
     }

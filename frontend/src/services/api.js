@@ -1,8 +1,18 @@
-const API_BASE =
-  (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000").replace(
-    /\/$/,
-    ""
-  );
+const DEPLOYED_BACKEND_BASE = "https://kids-lock-1.onrender.com";
+
+function resolveApiBase() {
+  const envBase = import.meta.env.VITE_API_BASE_URL;
+  if (envBase) return envBase.replace(/\/$/, "");
+
+  const isLocalhost =
+    typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1");
+
+  return isLocalhost ? "http://localhost:5000" : DEPLOYED_BACKEND_BASE;
+}
+
+const API_BASE = resolveApiBase();
 
 export async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_BASE}${endpoint}`, {

@@ -57,8 +57,8 @@ export default function AdminSignup() {
 
       setSuccess("Account created. Redirecting to login...");
       setTimeout(() => setAppStage("LOGIN"), 900);
-    } catch {
-      setError("Signup failed. Username may already be in use.");
+    } catch (error) {
+      setError(error.message || "Signup failed. Username may already be in use.");
     } finally {
       setIsSubmitting(false);
     }
