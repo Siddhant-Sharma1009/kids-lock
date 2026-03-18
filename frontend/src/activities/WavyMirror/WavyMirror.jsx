@@ -1,57 +1,51 @@
 import { useEffect, useState } from "react";
 import "./wavyMirror.css";
 
-/**
- * Star Tunnel Illusion
- * - Forward motion depth effect
- * - Calm, smooth, premium look
- * - Child-safe & performance-friendly
- */
+function createStar() {
+  return {
+    id: Math.random(),
+    x: Math.random() * 100 - 50,
+    y: Math.random() * 100 - 50,
+    z: Math.random() * 100,
+    size: Math.random() * 2 + 0.5,
+  };
+}
+
 export default function WavyMirror() {
-  const [stars, setStars] = useState([]);
+  const [stars, setStars] = useState(() =>
+    Array.from({ length: 140 }, createStar)
+  );
 
   useEffect(() => {
-    const createStar = () => ({
-      id: Math.random(),
-      x: Math.random() * 100 - 50,
-      y: Math.random() * 100 - 50,
-      z: Math.random() * 100,
-      size: Math.random() * 2 + 0.5,
-    });
-
-    setStars(Array.from({ length: 140 }, createStar));
-
-    const interval = setInterval(() => {
-      setStars((prev) =>
-        prev.map((s) => {
-          let z = s.z - 1.2;
-          if (z <= 0) {
-            return createStar();
-          }
-          return { ...s, z };
+    const interval = window.setInterval(() => {
+      setStars((previousStars) =>
+        previousStars.map((star) => {
+          const nextDepth = star.z - 1.2;
+          if (nextDepth <= 0) return createStar();
+          return { ...star, z: nextDepth };
         })
       );
     }, 30);
 
-    return () => clearInterval(interval);
+    return () => window.clearInterval(interval);
   }, []);
 
   return (
     <div className="star-tunnel">
-      {stars.map((s) => {
-        const scale = 100 / s.z;
-        const x = s.x * scale;
-        const y = s.y * scale;
+      {stars.map((star) => {
+        const scale = 100 / star.z;
+        const x = star.x * scale;
+        const y = star.y * scale;
 
         return (
           <div
-            key={s.id}
+            key={star.id}
             className="star"
             style={{
               transform: `translate(${x}px, ${y}px) scale(${scale})`,
               opacity: Math.min(scale / 4, 1),
-              width: s.size,
-              height: s.size,
+              width: star.size,
+              height: star.size,
             }}
           />
         );

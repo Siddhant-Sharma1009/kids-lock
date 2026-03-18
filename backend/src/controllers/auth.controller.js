@@ -1,10 +1,17 @@
 import User from "../models/User.js";
-import { verifyPassword, hashPassword } from "../utils/hash.js";
+import { hashPassword, verifyPassword } from "../utils/hash.js";
 import { signToken } from "../utils/jwt.js";
 
-/**
- * LOGIN
- */
+const isProduction = process.env.NODE_ENV === "production";
+
+function cookieOptions() {
+  return {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+  };
+}
+
 export async function login(req, res) {
   try {
     const { username, password } = req.body;
@@ -18,52 +25,32 @@ export async function login(req, res) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const valid = await verifyPassword(password, user.passwordHash);
-    if (!valid) {
+    const validPassword = await verifyPassword(password, user.passwordHash);
+    if (!validPassword) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = signToken({
-      id: user._id,
-      role: user.role,
-    });
+    const token = signToken({ id: user._id, role: user.role });
+    res.cookie("token", token, cookieOptions());
 
-    // 🔥 CORRECT COOKIE CONFIG FOR RENDER + VERCEL
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,      // REQUIRED (HTTPS)
-      sameSite: "none",  // REQUIRED (cross-site)
-    });
-
-    res.json({
+    return res.json({
       user: {
         username: user.username,
         role: user.role,
         exitSequence: user.exitSequence,
       },
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Login failed" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Login failed" });
   }
 }
 
-/**
- * LOGOUT
- */
 export function logout(_, res) {
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-  });
-
+  res.clearCookie("token", cookieOptions());
   res.json({ message: "Logged out" });
 }
 
-/**
- * REGISTER
- */
 export async function register(req, res) {
   try {
     const { username, password } = req.body;
@@ -72,8 +59,8 @@ export async function register(req, res) {
       return res.status(400).json({ message: "Missing fields" });
     }
 
-    const exists = await User.findOne({ username });
-    if (exists) {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
@@ -84,12 +71,12 @@ export async function register(req, res) {
       exitSequence: ["e", "x", "i", "t"],
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Parent created successfully",
       user: { username: user.username },
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Registration failed" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Registration failed" });
   }
 }

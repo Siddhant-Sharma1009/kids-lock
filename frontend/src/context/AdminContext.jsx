@@ -1,18 +1,13 @@
 import { createContext, useState } from "react";
 
-/**
- * 🔐 Admin context
- * MUST export AdminContext as a NAMED export
- */
-export const AdminContext = createContext(null);
-
 const BOOTSTRAP_EXIT = ["e", "x", "i", "t"];
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const AdminContext = createContext(null);
 
 export function AdminProvider({ children }) {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [adminUser, setAdminUser] = useState(null);
-
-  // 🔐 Active exit sequence
   const [exitSequence, setExitSequence] = useState(BOOTSTRAP_EXIT);
 
   const clearAdmin = () => {

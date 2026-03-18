@@ -1,51 +1,40 @@
-import { useEffect, useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import keyboardMap from "./keyboardMap";
 
-/**
- * Global keyboard handler (CHILD MODE)
- * IMPORTANT RULE:
- * - If ANY input / textarea is focused → IGNORE keyboard
- *   (exit password, admin forms, etc.)
- */
-export default function useKeyboardListener(
-  onActivity,
-  onBackground
-) {
+function normalizeKey(rawKey) {
+  if (!rawKey) return "";
+  return rawKey.length === 1 ? rawKey.toLowerCase() : rawKey.toLowerCase();
+}
+
+export default function useKeyboardListener(onActivity, onBackground) {
   const { appStage } = useContext(AppContext);
 
   useEffect(() => {
-    const handler = (e) => {
-      // Only active in CHILD mode
+    const handler = (event) => {
       if (appStage !== "CHILD") return;
+      if (event.repeat) return;
 
-      // 🔐 CRITICAL FIX:
-      // If user is typing in an input, do NOTHING
-      const el = document.activeElement;
+      const activeElement = document.activeElement;
       if (
-        el &&
-        (el.tagName === "INPUT" ||
-          el.tagName === "TEXTAREA" ||
-          el.isContentEditable)
+        activeElement &&
+        (activeElement.tagName === "INPUT" ||
+          activeElement.tagName === "TEXTAREA" ||
+          activeElement.isContentEditable)
       ) {
         return;
       }
 
-      if (e.repeat) return;
+      const key = normalizeKey(event.key);
+      const mappedActivity = keyboardMap[key];
 
-      const key = e.key.toLowerCase();
-
-      // Activity keys
-      if (keyboardMap[key]) {
-        e.preventDefault();
-        onActivity(keyboardMap[key]);
+      if (mappedActivity) {
+        event.preventDefault();
+        onActivity(mappedActivity);
         return;
       }
 
-      // Other keys → background effect
-      if (/^[a-z0-9]$/i.test(key)) {
-        onBackground();
-      }
+      onBackground();
     };
 
     window.addEventListener("keydown", handler);

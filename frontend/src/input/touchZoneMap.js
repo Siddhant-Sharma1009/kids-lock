@@ -1,18 +1,7 @@
-/**
- * Screen divided into 4 fixed zones
- *
- *  ┌───────────────┬───────────────┐
- *  │  TOP LEFT     │  TOP RIGHT    │
- *  │  ILLUSION     │  COLOR        │
- *  ├───────────────┼───────────────┤
- *  │  SOUND        │  BUBBLE GAME  │
- *  │  BOTTOM LEFT  │  BOTTOM RIGHT │
- *  └───────────────┴───────────────┘
- */
-
 const touchZoneMap = {
-  TOP_LEFT: "ILLUSION",
-  TOP_RIGHT: "COLOR_SPLASH",
+  TOP_LEFT: "COLOR_SPLASH",
+  TOP_RIGHT: "RAINBOW_RAIN",
+  CENTER: "DANCING_DOTS",
   BOTTOM_LEFT: "SOUND_BOARD",
   BOTTOM_RIGHT: "BUBBLE_GAME",
 };

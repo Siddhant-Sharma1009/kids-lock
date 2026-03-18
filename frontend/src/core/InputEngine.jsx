@@ -3,28 +3,20 @@ import { AppContext } from "../context/AppContext";
 import useKeyboardListener from "../input/useKeyboardListener";
 import useTouchListener from "../input/useTouchListener";
 
-/**
- * InputEngine
- * - Listens to keyboard & touch
- * - Works ONLY in CHILD mode
- */
 export default function InputEngine() {
-  const { appStage, setActiveActivity } = useContext(AppContext);
+  const { setActiveActivity, recordActivityLaunch } = useContext(AppContext);
 
-  // 🔑 Keyboard → game / illusion
   const handleActivity = (activityName) => {
     setActiveActivity(activityName);
+    recordActivityLaunch(activityName);
   };
 
-  // 🎨 Touch / unused keys → background
-  const handleBackground = () => {
-    document.body.style.backgroundColor =
-      `hsl(${Math.random() * 360}, 80%, 70%)`;
+  const handleBackgroundPulse = () => {
+    window.dispatchEvent(new CustomEvent("kids-lock:background-pulse"));
   };
 
-  // Listeners already check appStage === "CHILD"
-  useKeyboardListener(handleActivity, handleBackground);
-  useTouchListener(handleBackground);
+  useKeyboardListener(handleActivity, handleBackgroundPulse);
+  useTouchListener(handleBackgroundPulse, handleActivity);
 
-  return null; // Engine only, no UI
+  return null;
 }

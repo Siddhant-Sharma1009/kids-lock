@@ -1,24 +1,27 @@
-/**
- * Central API handler
- * Production-ready for Render + Vercel
- */
-
-const API_BASE = "https://kids-lock-1.onrender.com";
+const API_BASE =
+  (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000").replace(
+    /\/$/,
+    ""
+  );
 
 export async function apiRequest(endpoint, options = {}) {
-  const res = await fetch(`${API_BASE}${endpoint}`, {
-    credentials: "include", // 🔥 REQUIRED for cookies
+  const response = await fetch(`${API_BASE}${endpoint}`, {
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      ...(options.headers || {}),
     },
     ...options,
   });
 
-  // Better error visibility
-  if (!res.ok) {
-    const error = await res.json().catch(() => ({}));
-    throw new Error(error.message || "API error");
+  const contentType = response.headers.get("content-type") || "";
+  const isJson = contentType.includes("application/json");
+
+  if (!response.ok) {
+    const payload = isJson ? await response.json().catch(() => null) : null;
+    throw new Error(payload?.message || "Request failed");
   }
 
-  return res.json();
+  if (!isJson) return null;
+  return response.json();
 }

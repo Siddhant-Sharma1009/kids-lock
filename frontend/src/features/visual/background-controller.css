@@ -1,0 +1,109 @@
+.ambient-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  transition: filter 400ms ease, opacity 300ms ease;
+}
+
+.ambient-layer.ambient-calm {
+  filter: saturate(0.8) contrast(0.94);
+}
+
+.ambient-gradient {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 20% 15%, color-mix(in srgb, var(--ambient-2) 86%, white 14%), transparent 46%),
+    radial-gradient(circle at 72% 18%, color-mix(in srgb, var(--ambient-1) 84%, white 16%), transparent 42%),
+    radial-gradient(circle at 72% 82%, color-mix(in srgb, var(--ambient-3) 82%, black 18%), transparent 44%),
+    linear-gradient(135deg, var(--ambient-1), var(--ambient-2) 46%, var(--ambient-3));
+  transform: scale(1.1);
+  animation: ambientDrift 20s ease-in-out infinite alternate;
+}
+
+.ambient-pulse {
+  position: absolute;
+  width: 42vmax;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(16px);
+  background: radial-gradient(
+    circle,
+    hsla(var(--ambient-pulse-hue), 88%, 67%, 0.42),
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  animation: pulseFloat 8s ease-in-out infinite;
+}
+
+.ambient-pulse-a {
+  left: -12vmax;
+  bottom: -14vmax;
+}
+
+.ambient-pulse-b {
+  right: -10vmax;
+  top: -12vmax;
+}
+
+.ambient-grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 0.65px, transparent 0.65px);
+  background-size: 3px 3px;
+  opacity: 0.11;
+  pointer-events: none;
+}
+
+.ambient-message {
+  position: absolute;
+  left: 50%;
+  top: 13%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.45rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(8, 18, 29, 0.48);
+  color: rgba(240, 246, 255, 0.95);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  animation: messageReveal 250ms ease-out;
+}
+
+.ambient-stage-child .ambient-message {
+  top: 18%;
+}
+
+@keyframes ambientDrift {
+  0% {
+    transform: scale(1.08) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.14) translate3d(-2%, 2%, 0);
+  }
+}
+
+@keyframes pulseFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(1.6rem, -1rem, 0);
+  }
+}
+
+@keyframes messageReveal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
